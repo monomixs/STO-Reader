@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.STOReader" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowBackground">@color/bg</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+        <item name="colorPrimary">@color/accent</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_muted</item>
+    </style>
+
+    <!-- Input field style -->
+    <style name="Widget.STOReader.TextInput" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundColor">@color/surface</item>
+        <item name="boxStrokeColor">@color/surface3</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxCornerRadiusTopStart">8dp</item>
+        <item name="boxCornerRadiusTopEnd">8dp</item>
+        <item name="boxCornerRadiusBottomStart">8dp</item>
+        <item name="boxCornerRadiusBottomEnd">8dp</item>
+        <item name="hintTextColor">@color/text_muted</item>
+    </style>
+</resources>

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg">
+
+    <!-- Main content column -->
+    <LinearLayout
+        android:id="@+id/mainColumn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+<!-- TOP BAR -->
+<LinearLayout
+    android:id="@+id/topBar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
+    android:paddingBottom="14dp"
+    android:background="@color/bg">
+
+    <TextView
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="← Back"
+        android:textColor="@color/text_primary"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:background="@drawable/bg_btn_ghost"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="9dp"
+        android:paddingBottom="9dp"
+        android:clickable="true"
+        android:focusable="true"/>
+
+    <!-- Spacer -->
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1"/>
+
+    <!-- Save to recent (shown only when opened from file manager) -->
+    <TextView
+        android:id="@+id/btnSaveToRecent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:textColor="@color/text_primary"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:background="@drawable/bg_btn_ghost"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="9dp"
+        android:paddingBottom="9dp"
+        android:layout_marginStart="8dp"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true"/>
+
+    <!-- Edit file (shown only when opened from file manager) -->
+    <TextView
+        android:id="@+id/btnEditFile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="✏ Edit"
+        android:textColor="#1A1408"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:background="@drawable/bg_btn_primary"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="9dp"
+        android:paddingBottom="9dp"
+        android:layout_marginStart="8dp"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true"/>
+
+</LinearLayout>
+
+        <!-- DIVIDER -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/surface3"/>
+
+        <!-- SCROLLABLE CONTENT -->
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:paddingTop="32dp"
+                android:paddingBottom="100dp">
+
+                <!-- Story title -->
+                <TextView
+                    android:id="@+id/readerStoryTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/accent"
+                    android:textSize="32sp"
+                    android:fontFamily="serif"
+                    android:textStyle="bold"
+                    android:lineSpacingMultiplier="1.2"
+                    android:layout_marginBottom="6dp"/>
+
+                <!-- Chapter label -->
+                <TextView
+                    android:id="@+id/readerChapterLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/accent"
+                    android:textSize="17sp"
+                    android:fontFamily="serif"
+                    android:letterSpacing="0.05"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="28dp"/>
+
+                <!-- Chapter content -->
+                <TextView
+                    android:id="@+id/readerContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp"
+                    android:lineSpacingMultiplier="1.2"
+                    android:textIsSelectable="true"/>
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+
+    <!-- Floating NEXT button (bottom right) -->
+    <TextView
+        android:id="@+id/btnNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="32dp"
+        android:text="Next →"
+        android:textColor="#1A1408"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:background="@drawable/bg_btn_primary"
+        android:paddingStart="22dp"
+        android:paddingEnd="22dp"
+        android:paddingTop="13dp"
+        android:paddingBottom="13dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:elevation="6dp"/>
+
+    <!-- Nav bar spacer (inside FrameLayout, sits at bottom of mainColumn via gravity) -->
+    <View
+        android:id="@+id/navBarSpacer"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_gravity="bottom"/>
+
+</FrameLayout>

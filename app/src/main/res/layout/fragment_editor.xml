@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg">
+
+<!-- TOP BAR -->
+<LinearLayout
+    android:id="@+id/topBar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
+    android:paddingBottom="14dp"
+    android:background="@color/bg">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="✦ STO Editor"
+        android:textColor="@color/accent"
+        android:textSize="20sp"
+        android:fontFamily="serif"
+        android:letterSpacing="0.02"/>
+
+    <!-- Delete story button (replaces back) -->
+    <TextView
+        android:id="@+id/btnDeleteStory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:textColor="@color/danger"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:background="@drawable/bg_btn_danger"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="9dp"
+        android:paddingBottom="9dp"
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        android:focusable="true"/>
+
+    <!-- Save button -->
+    <TextView
+        android:id="@+id/btnSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:textColor="@color/text_primary"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:background="@drawable/bg_btn_ghost"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="9dp"
+        android:paddingBottom="9dp"
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        android:focusable="true"/>
+
+    <!-- Export button -->
+    <TextView
+        android:id="@+id/btnExport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="⬇ Export"
+        android:textColor="#1A1408"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:background="@drawable/bg_btn_primary"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="9dp"
+        android:paddingBottom="9dp"
+        android:clickable="true"
+        android:focusable="true"/>
+</LinearLayout>
+
+    <!-- DIVIDER -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/surface3"/>
+
+    <!-- SCROLLABLE CONTENT -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- STORY TITLE -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="STORY TITLE"
+                    android:textColor="@color/text_muted"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.08"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="6dp"/>
+
+                <EditText
+                    android:id="@+id/storyTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Untitled Story"
+                    android:textColorHint="@color/text_muted"
+                    android:textColor="@color/text_primary"
+                    android:textSize="15sp"
+                    android:background="@drawable/bg_card"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    android:inputType="text"
+                    android:singleLine="true"/>
+            </LinearLayout>
+
+            <!-- CHAPTERS LIST -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/chaptersList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="20dp"
+                android:clipToPadding="false"/>
+
+            <!-- ADD CHAPTER BUTTON -->
+            <TextView
+                android:id="@+id/btnAddChapter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="＋  Add Chapter"
+                android:textColor="@color/text_muted"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/bg_card"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <!-- NAV BAR SPACER -->
+            <View
+                android:id="@+id/navBarSpacer"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"/>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.wedley.storeader">
+
+    <application
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.STOReader">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize">
+
+            <!-- Launcher -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- Open .sto from file manager (content URI) -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="content" android:mimeType="*/*" />
+            </intent-filter>
+
+            <!-- Open .sto from file manager (file URI) -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="file" android:mimeType="*/*" />
+            </intent-filter>
+
+        </activity>
+    </application>
+</manifest>

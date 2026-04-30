@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="14dp"
+    app:cardBackgroundColor="@color/surface"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/surface3"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- CHAPTER HEADER (tap to expand) -->
+        <LinearLayout
+            android:id="@+id/chapterHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true">
+
+            <!-- Badge -->
+            <TextView
+                android:id="@+id/chapterBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ch. 1"
+                android:textColor="@color/accent"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.04"
+                android:background="@color/accent_dim"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"/>
+
+            <!-- Name preview -->
+            <TextView
+                android:id="@+id/chapterNamePreview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Untitled Chapter"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginStart="10dp"
+                android:singleLine="true"
+                android:ellipsize="end"/>
+
+            <!-- Toggle arrow -->
+            <TextView
+                android:id="@+id/chapterToggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="⌄"
+                android:textColor="@color/text_muted"
+                android:textSize="16sp"/>
+        </LinearLayout>
+
+        <!-- CHAPTER BODY (collapsed by default) -->
+        <LinearLayout
+            android:id="@+id/chapterBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="16dp"
+            android:visibility="gone">
+
+            <!-- Number + Name row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- Number -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginEnd="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="NUMBER"
+                        android:textColor="@color/text_muted"
+                        android:textSize="11sp"
+                        android:letterSpacing="0.08"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="6dp"/>
+
+                    <EditText
+                        android:id="@+id/inputNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="e.g. 1"
+                        android:textColorHint="@color/text_muted"
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp"
+                        android:background="@drawable/bg_card"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:inputType="text"
+                        android:singleLine="true"/>
+                </LinearLayout>
+
+                <!-- Name -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:orientation="vertical"
+                    android:layout_marginStart="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="CHAPTER NAME"
+                        android:textColor="@color/text_muted"
+                        android:textSize="11sp"
+                        android:letterSpacing="0.08"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="6dp"/>
+
+                    <EditText
+                        android:id="@+id/inputName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Name this chapter"
+                        android:textColorHint="@color/text_muted"
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp"
+                        android:background="@drawable/bg_card"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:inputType="text"
+                        android:singleLine="true"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Story Content -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="STORY CONTENT"
+                android:textColor="@color/text_muted"
+                android:textSize="11sp"
+                android:letterSpacing="0.08"
+                android:textStyle="bold"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="6dp"/>
+
+            <EditText
+                android:id="@+id/inputStory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Write your chapter here..."
+                android:textColorHint="@color/text_muted"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
+                android:background="@drawable/bg_card"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:inputType="textMultiLine"
+                android:minLines="8"
+                android:gravity="top"
+                android:lineSpacingMultiplier="1.6"/>
+
+            <!-- Delete button -->
+            <TextView
+                android:id="@+id/btnDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="✕  Delete Chapter"
+                android:textColor="@color/danger"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:background="@drawable/bg_btn_danger"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:paddingTop="7dp"
+                android:paddingBottom="7dp"
+                android:layout_marginTop="12dp"
+                android:layout_gravity="end"
+                android:clickable="true"
+                android:focusable="true"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

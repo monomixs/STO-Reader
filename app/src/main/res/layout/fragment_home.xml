@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg">
+
+    <!-- TOP BAR (sticky) -->
+    <LinearLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="14dp"
+        android:background="@color/bg">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="✦ STO Editor"
+            android:textColor="@color/accent"
+            android:textSize="20sp"
+            android:fontFamily="serif"
+            android:letterSpacing="0.02"/>
+    </LinearLayout>
+
+    <!-- DIVIDER -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/surface3"/>
+
+    <!-- SCROLLABLE CONTENT -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- HERO -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="40dp"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Your Stories"
+                    android:textColor="@color/accent"
+                    android:textSize="36sp"
+                    android:fontFamily="serif"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Create, edit, and export your .sto files"
+                    android:textColor="@color/text_muted"
+                    android:textSize="14sp"
+                    android:layout_marginTop="8dp"/>
+            </LinearLayout>
+
+            <!-- ACTION CARDS -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="16dp">
+
+                <!-- New Story -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardNewStory"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    app:cardBackgroundColor="@color/surface"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/surface3"
+                    app:strokeWidth="1dp"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="18dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="✦"
+                            android:textSize="22sp"
+                            android:textColor="@color/text_primary"
+                            android:layout_marginBottom="10dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="New Story"
+                            android:textColor="@color/text_primary"
+                            android:textSize="14sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Start from scratch"
+                            android:textColor="@color/text_muted"
+                            android:textSize="12sp"
+                            android:layout_marginTop="3dp"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Open File -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardOpenFile"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="6dp"
+                    app:cardBackgroundColor="@color/surface"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/surface3"
+                    app:strokeWidth="1dp"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="18dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="📂"
+                            android:textSize="22sp"
+                            android:layout_marginBottom="10dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Open File"
+                            android:textColor="@color/text_primary"
+                            android:textSize="14sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Load a .sto file"
+                            android:textColor="@color/text_muted"
+                            android:textSize="12sp"
+                            android:layout_marginTop="3dp"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <!-- SECTION LABEL -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="RECENT"
+                android:textColor="@color/text_muted"
+                android:textSize="11sp"
+                android:letterSpacing="0.1"
+                android:textStyle="bold"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="8dp"/>
+
+            <!-- RECENT LIST -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recentList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:clipToPadding="false"/>
+
+            <!-- EMPTY STATE -->
+            <TextView
+                android:id="@+id/emptyState"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No recent stories yet.\nCreate one or open a file above."
+                android:textColor="@color/text_muted"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:padding="40dp"
+                android:visibility="gone"/>
+
+            <!-- NAV BAR SPACER (set in code) -->
+            <View
+                android:id="@+id/navBarSpacer"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>
