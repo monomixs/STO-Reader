@@ -32,10 +32,15 @@ class StoryAdapter(
         val item = items[position]
         holder.title.text = item.title
         holder.meta.text  = timeAgo(item.timestamp)
-        holder.chapterCount.text = when (item.chapterCount) {
+        val chaptersText = when (item.chapterCount) {
             1    -> "1 chapter"
             else -> "${item.chapterCount} chapters"
         }
+        val episodesText = when (item.episodeCount) {
+            1    -> "1 episode"
+            else -> "${item.episodeCount} episodes"
+        }
+        holder.chapterCount.text = "$chaptersText • $episodesText"
 
         holder.btnRead.setOnClickListener {
             val pos = holder.bindingAdapterPosition

@@ -2,7 +2,9 @@ package com.wedley.storeader
 
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
+import android.provider.OpenableColumns
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -53,7 +55,13 @@ class MainActivity : AppCompatActivity() {
         val uri = intent.data
 
         if (intent.action == Intent.ACTION_VIEW && uri != null) {
-            showFragment(HomeFragment())
+            val fileName = getFileName(uri)
+            if (fileName != null && !fileName.lowercase().endsWith(".sto")) {
+                showFragment(HomeFragment(), animate = false)
+                return
+            }
+
+            showFragment(HomeFragment(), animate = false)
 
             lifecycleScope.launch(Dispatchers.IO) {
                 try {
@@ -67,19 +75,41 @@ class MainActivity : AppCompatActivity() {
                     withContext(Dispatchers.Main) {
                         if (!isFinishing && !isDestroyed) {
                             viewModel.currentStory = story
-                            viewModel.readingChapterIndex = 0
+                            viewModel.readingChapterIndex = -1
                             viewModel.openedFromFileManager = true
-                            showFragment(ReaderFragment())
+                            showFragment(ReaderFragment(), animate = true)
                         }
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    e.printStackTrace()
                 }
             }
         } else {
-            showFragment(HomeFragment())
+            showFragment(HomeFragment(), animate = false)
         }
+    }
+
+    private fun getFileName(uri: Uri): String? {
+        var result: String? = null
+        if (uri.scheme == "content") {
+            val cursor = contentResolver.query(uri, null, null, null, null)
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    val index = cursor.getColumnIndex(android.provider.OpenableColumns.DISPLAY_NAME)
+                    if (index != -1) result = cursor.getString(index)
+                }
+            } finally {
+                cursor?.close()
+            }
+        }
+        if (result == null) {
+            result = uri.path
+            val cut = result?.lastIndexOf('/') ?: -1
+            if (cut != -1) {
+                result = result?.substring(cut + 1)
+            }
+        }
+        return result
     }
 
     private fun checkForLastCrash() {
@@ -97,11 +127,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun showFragment(fragment: androidx.fragment.app.Fragment) {
+    fun showFragment(fragment: androidx.fragment.app.Fragment, animate: Boolean = true) {
         if (!isFinishing && !isDestroyed) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.container, fragment)
-                .commit() // removed commitAllowingStateLoss
+            val transaction = supportFragmentManager.beginTransaction()
+                .setReorderingAllowed(true)
+            
+            if (animate) {
+                transaction.setCustomAnimations(
+                    R.anim.slide_in_right, R.anim.slide_out_left,
+                    R.anim.slide_in_left, R.anim.slide_out_right
+                )
+            }
+            
+            transaction.replace(R.id.container, fragment)
+                .commit()
         }
     }
 }

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cover Page</title>
+
+    <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: Arial, sans-serif;
+        }
+
+        body {
+          height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: linear-gradient(135deg, #0f172a, #1e293b);
+        }
+
+        .cover {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+        }
+
+        .card {
+          background: rgba(255, 255, 255, 0.08);
+          backdrop-filter: blur(12px);
+          padding: 30px;
+          border-radius: 20px;
+          width: 320px;
+          color: white;
+          text-align: center;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        .title {
+          font-size: 28px;
+          margin-bottom: 20px;
+          color: #38bdf8;
+        }
+
+        .info p {
+          margin: 10px 0;
+          font-size: 16px;
+        }
+
+        .info span {
+          font-weight: bold;
+          color: #a5f3fc;
+        }
+
+        .btn {
+          margin-top: 20px;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 12px;
+          background: #38bdf8;
+          color: black;
+          font-weight: bold;
+          cursor: pointer;
+          transition: 0.2s;
+        }
+
+        .btn:hover {
+          background: #0ea5e9;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="cover">
+    <div class="card">
+        <h1 class="title">My First Story</h1>
+
+        <div class="info">
+            <p><span>Author:</span> Wedley</p>
+            <p><span>Genre:</span> Technology</p>
+            <p><span>Chapter:</span> 1</p>
+            <p><span>Episodes:</span> 5</p>
+        </div>
+
+        <button class="btn">Start Reading</button>
+    </div>
+</div>
+
+</body>
+</html>

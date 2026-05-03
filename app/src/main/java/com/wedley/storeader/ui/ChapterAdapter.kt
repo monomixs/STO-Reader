@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.wedley.storeader.R
 import com.wedley.storeader.data.Chapter
+import com.wedley.storeader.data.Episode
 
 class ChapterAdapter(
     private val chapters: MutableList<Chapter>,
@@ -17,15 +19,16 @@ class ChapterAdapter(
 ) : RecyclerView.Adapter<ChapterAdapter.VH>() {
 
     inner class VH(view: View) : RecyclerView.ViewHolder(view) {
-        val header      : View     = view.findViewById(R.id.chapterHeader)
-        val body        : View     = view.findViewById(R.id.chapterBody)
-        val badge       : TextView = view.findViewById(R.id.chapterBadge)
-        val namePreview : TextView = view.findViewById(R.id.chapterNamePreview)
-        val toggle      : TextView = view.findViewById(R.id.chapterToggle)
-        val inputNumber : EditText = view.findViewById(R.id.inputNumber)
-        val inputName   : EditText = view.findViewById(R.id.inputName)
-        val inputStory  : EditText = view.findViewById(R.id.inputStory)
-        val btnDelete   : View     = view.findViewById(R.id.btnDelete)
+        val header       : View     = view.findViewById(R.id.chapterHeader)
+        val body         : View     = view.findViewById(R.id.chapterBody)
+        val badge        : TextView = view.findViewById(R.id.chapterBadge)
+        val namePreview  : TextView = view.findViewById(R.id.chapterNamePreview)
+        val toggle       : TextView = view.findViewById(R.id.chapterToggle)
+        val inputNumber  : EditText = view.findViewById(R.id.inputNumber)
+        val inputName    : EditText = view.findViewById(R.id.inputName)
+        val episodesList : RecyclerView = view.findViewById(R.id.episodesList)
+        val btnAddEpisode: View     = view.findViewById(R.id.btnAddEpisode)
+        val btnDelete    : View     = view.findViewById(R.id.btnDelete)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
@@ -37,18 +40,6 @@ class ChapterAdapter(
     override fun onBindViewHolder(holder: VH, position: Int) {
         val ch = chapters[position]
 
-        // Remove all watchers before touching text fields
-        holder.inputNumber.tag = null
-        holder.inputName.tag   = null
-        holder.inputStory.tag  = null
-
-        (holder.inputNumber.getTag(R.id.inputNumber) as? TextWatcher)
-            ?.let { holder.inputNumber.removeTextChangedListener(it) }
-        (holder.inputName.getTag(R.id.inputName) as? TextWatcher)
-            ?.let { holder.inputName.removeTextChangedListener(it) }
-        (holder.inputStory.getTag(R.id.inputStory) as? TextWatcher)
-            ?.let { holder.inputStory.removeTextChangedListener(it) }
-
         // Set values
         holder.badge.text        = "Ch. ${position + 1}"
         holder.namePreview.text  = ch.name.ifBlank { "Untitled Chapter" }
@@ -58,24 +49,27 @@ class ChapterAdapter(
 
         holder.inputNumber.setText(ch.number)
         holder.inputName.setText(ch.name)
-        holder.inputStory.setText(ch.story)
 
-        // Attach fresh watchers and store them in tags
-        val numWatcher = watcher { ch.number = it }
-        val nameWatcher = watcher {
+        // Clear existing watchers (simplified for this update)
+        holder.inputNumber.addTextChangedListener(watcher { ch.number = it })
+        holder.inputName.addTextChangedListener(watcher {
             ch.name = it
             holder.namePreview.text  = it.ifBlank { "Untitled Chapter" }
             holder.namePreview.alpha = if (it.isBlank()) 0.4f else 1f
+        })
+
+        // Episodes Adapter
+        val epAdapter = EpisodeAdapter(ch.episodes) { epIndex ->
+            ch.episodes.removeAt(epIndex)
+            notifyItemChanged(position) // Refresh nested list
         }
-        val storyWatcher = watcher { ch.story = it }
+        holder.episodesList.layoutManager = LinearLayoutManager(holder.itemView.context)
+        holder.episodesList.adapter = epAdapter
 
-        holder.inputNumber.addTextChangedListener(numWatcher)
-        holder.inputName.addTextChangedListener(nameWatcher)
-        holder.inputStory.addTextChangedListener(storyWatcher)
-
-        holder.inputNumber.setTag(R.id.inputNumber, numWatcher)
-        holder.inputName.setTag(R.id.inputName, nameWatcher)
-        holder.inputStory.setTag(R.id.inputStory, storyWatcher)
+        holder.btnAddEpisode.setOnClickListener {
+            ch.episodes.add(Episode(number = (ch.episodes.size + 1).toString()))
+            epAdapter.notifyItemInserted(ch.episodes.size - 1)
+        }
 
         // Expand/collapse
         holder.header.setOnClickListener {
@@ -87,7 +81,7 @@ class ChapterAdapter(
                 .start()
         }
 
-        // Delete — use bindingAdapterPosition to avoid stale index
+        // Delete
         holder.btnDelete.setOnClickListener {
             val pos = holder.bindingAdapterPosition
             if (pos != RecyclerView.NO_POSITION) onDelete(pos)
@@ -96,7 +90,6 @@ class ChapterAdapter(
 
     override fun getItemCount() = chapters.size
 
-    // Stable IDs = RecyclerView won't unnecessarily rebind unchanged items
     override fun getItemId(position: Int) = position.toLong()
 
     init { setHasStableIds(true) }

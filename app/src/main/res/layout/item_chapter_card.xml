@@ -159,35 +159,38 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Story Content -->
+            <!-- Episodes -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="STORY CONTENT"
+                android:text="EPISODES"
                 android:textColor="@color/text_muted"
                 android:textSize="11sp"
                 android:letterSpacing="0.08"
                 android:textStyle="bold"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="6dp"/>
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="4dp"/>
 
-            <EditText
-                android:id="@+id/inputStory"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/episodesList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Write your chapter here..."
-                android:textColorHint="@color/text_muted"
-                android:textColor="@color/text_primary"
-                android:textSize="14sp"
-                android:background="@drawable/bg_card"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:inputType="textMultiLine"
-                android:minLines="8"
-                android:gravity="top"
-                android:lineSpacingMultiplier="1.6"/>
+                android:nestedScrollingEnabled="false"/>
+
+            <TextView
+                android:id="@+id/btnAddEpisode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="+ Add Episode"
+                android:textColor="@color/accent"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:background="@drawable/bg_btn_ghost"
+                android:padding="10dp"
+                android:clickable="true"
+                android:focusable="true"/>
 
             <!-- Delete button -->
             <TextView

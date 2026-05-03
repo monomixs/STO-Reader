@@ -6,27 +6,28 @@
     android:orientation="vertical"
     android:background="@color/bg">
 
-    <!-- TOP BAR (sticky) -->
     <LinearLayout
         android:id="@+id/topBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:paddingBottom="14dp"
         android:background="@color/bg">
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="✦ STO Editor"
+            android:text="STO Reader"
             android:textColor="@color/accent"
             android:textSize="20sp"
             android:fontFamily="serif"
-            android:letterSpacing="0.02"/>
+            android:letterSpacing="0.02"
+            android:drawableStart="@drawable/ic_star"
+            android:drawablePadding="8dp"
+            android:gravity="center"/>
     </LinearLayout>
 
     <!-- DIVIDER -->
@@ -61,7 +62,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Your Stories"
+                    android:text="Welcome"
                     android:textColor="@color/accent"
                     android:textSize="36sp"
                     android:fontFamily="serif"/>
@@ -69,7 +70,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Create, edit, and export your .sto files"
+                    android:text="Create, edit, and share your stories"
                     android:textColor="@color/text_muted"
                     android:textSize="14sp"
                     android:layout_marginTop="8dp"/>
@@ -106,13 +107,13 @@
                         android:orientation="vertical"
                         android:padding="18dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="✦"
-                            android:textSize="22sp"
-                            android:textColor="@color/text_primary"
-                            android:layout_marginBottom="10dp"/>
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_star_4"
+                            app:tint="@color/text_primary"
+                            android:layout_marginBottom="10dp"
+                            android:contentDescription="New Story Icon"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -154,11 +155,11 @@
                         android:orientation="vertical"
                         android:padding="18dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="📂"
-                            android:textSize="22sp"
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_open"
+                            app:tint="@color/text_primary"
                             android:layout_marginBottom="10dp"/>
 
                         <TextView

@@ -26,6 +26,7 @@ class EditorFragment : Fragment() {
     private val appViewModel get() = (requireActivity() as MainActivity).viewModel
     private lateinit var chapterAdapter: ChapterAdapter
     private lateinit var recentManager: RecentStoriesManager
+    private var exportFormat: String = "sto"
 
     private val saveFileLauncher = registerForActivityResult(
         ActivityResultContracts.CreateDocument("text/plain")
@@ -62,11 +63,22 @@ class EditorFragment : Fragment() {
         // Title
         val titleInput = view.findViewById<EditText>(R.id.storyTitle)
         titleInput.setText(story.title)
-        titleInput.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) { story.title = s.toString() }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-        })
+        titleInput.addTextChangedListener(watcher { story.title = it })
+
+        // Author
+        val authorInput = view.findViewById<EditText>(R.id.storyAuthor)
+        authorInput.setText(story.author)
+        authorInput.addTextChangedListener(watcher { story.author = it })
+
+        // Genre
+        val genreInput = view.findViewById<EditText>(R.id.storyGenre)
+        genreInput.setText(story.genre)
+        genreInput.addTextChangedListener(watcher { story.genre = it })
+
+        // Description
+        val descInput = view.findViewById<EditText>(R.id.storyDescription)
+        descInput.setText(story.description)
+        descInput.addTextChangedListener(watcher { story.description = it })
 
         // Chapters
         chapterAdapter = ChapterAdapter(story.chapters) { index ->
@@ -95,13 +107,13 @@ class EditorFragment : Fragment() {
         parentFragmentManager.setFragmentResultListener(
             "delete_confirmed", viewLifecycleOwner
         ) { _, _ ->
-            recentManager.delete(story.title)
+            recentManager.delete(story.id, story.title)
             if (isAdded) {
                 Toast.makeText(requireContext(), "Story deleted", Toast.LENGTH_SHORT).show()
                 // Pop back to home
                 parentFragmentManager.popBackStack(null,
                     androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE)
-                (requireActivity() as MainActivity).showFragment(HomeFragment())
+                // (requireActivity() as MainActivity).showFragment(HomeFragment()) -- removed duplicate nav
             }
         }
 
@@ -119,10 +131,18 @@ class EditorFragment : Fragment() {
         }
 
         // Export
-        view.findViewById<View>(R.id.btnExport).setOnClickListener {
-            story.title = titleInput.text.toString()
-            val name = story.title.ifBlank { "story" }.replace(" ", "_") + ".sto"
+        parentFragmentManager.setFragmentResultListener("export_format", viewLifecycleOwner) { _, bundle ->
+            val format = bundle.getString("format") ?: "sto"
+            exportFormat = format
+            val title = view.findViewById<EditText>(R.id.storyTitle).text.toString()
+            val name = (if (title.isBlank()) "story" else title).replace(" ", "_") + (if (format == "sto") ".sto" else ".txt")
             saveFileLauncher.launch(name)
+        }
+
+        view.findViewById<View>(R.id.btnExport).setOnClickListener {
+            if (isAdded) {
+                ExportOptionsDialog().show(parentFragmentManager, "export_options")
+            }
         }
     }
 
@@ -130,15 +150,26 @@ class EditorFragment : Fragment() {
         if (!isAdded) return
         try {
             val story = appViewModel.currentStory
+            val content = if (exportFormat == "sto") {
+                StoParser.serialize(story)
+            } else {
+                StoParser.toPlainText(story)
+            }
             requireContext().contentResolver.openOutputStream(uri)?.use {
-                it.write(StoParser.serialize(story).toByteArray())
+                it.write(content.toByteArray())
             }
             recentManager.save(story)
-            Toast.makeText(requireContext(), "Exported ⬇", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Exported", Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
             Toast.makeText(requireContext(), "Export failed", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun dpToPx(dp: Int) = (dp * resources.displayMetrics.density).toInt()
+
+    private fun watcher(onChange: (String) -> Unit) = object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) { onChange(s?.toString() ?: "") }
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+    }
 }

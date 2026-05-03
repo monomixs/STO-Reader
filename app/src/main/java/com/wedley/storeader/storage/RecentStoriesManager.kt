@@ -20,21 +20,24 @@ class RecentStoriesManager(context: Context) {
     fun save(story: Story) {
         val list = getAll().toMutableList()
         val entry = RecentStory(
+            id = story.id,
             title = story.title.ifBlank { "Untitled" },
             timestamp = System.currentTimeMillis(),
             storyJson = gson.toJson(story),
-            chapterCount = story.chapters.size
+            chapterCount = story.chapters.size,
+            episodeCount = story.chapters.sumOf { it.episodes.size }
         )
-        list.removeAll { it.title == entry.title }
+        // Match by ID or Title (for migration/fallback)
+        list.removeAll { it.id == entry.id || it.title == entry.title }
         list.add(0, entry)
         prefs.edit()
             .putString("recent", gson.toJson(list.take(8)))
             .apply()
     }
 
-    fun delete(title: String) {
+    fun delete(id: String, title: String) {
         val list = getAll().toMutableList()
-        list.removeAll { it.title == title }
+        list.removeAll { it.id == id || it.title == title }
         prefs.edit()
             .putString("recent", gson.toJson(list))
             .apply()

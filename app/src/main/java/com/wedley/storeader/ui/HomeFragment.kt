@@ -2,6 +2,7 @@ package com.wedley.storeader.ui
 
 import android.net.Uri
 import android.os.Bundle
+import android.provider.OpenableColumns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -93,7 +94,7 @@ class HomeFragment : Fragment() {
                 if (!isAdded) return@StoryAdapter
                 recentManager?.getStory(index)?.let { story ->
                     appViewModel.currentStory = story
-                    appViewModel.readingChapterIndex = 0
+                    appViewModel.readingChapterIndex = -1
                     navigateToReader()
                 }
             },
@@ -144,6 +145,13 @@ class HomeFragment : Fragment() {
     private fun loadFile(uri: Uri) {
         if (!isAdded) return
 
+        // Check if file has .sto extension
+        val fileName = getFileName(uri)
+        if (fileName != null && !fileName.lowercase().endsWith(".sto")) {
+            Toast.makeText(requireContext(), "Only .sto files are supported", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         // Read file off the main thread
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -158,7 +166,8 @@ class HomeFragment : Fragment() {
                 withContext(Dispatchers.Main) {
                     if (!isAdded) return@withContext
                     appViewModel.currentStory = story
-                    appViewModel.readingChapterIndex = 0
+                    appViewModel.readingChapterIndex = -1
+                    appViewModel.openedFromFileManager = true
                     navigateToReader()
                 }
             } catch (e: Exception) {
@@ -170,14 +179,38 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun getFileName(uri: Uri): String? {
+        var result: String? = null
+        if (uri.scheme == "content") {
+            val cursor = requireContext().contentResolver.query(uri, null, null, null, null)
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    val index = cursor.getColumnIndex(android.provider.OpenableColumns.DISPLAY_NAME)
+                    if (index != -1) result = cursor.getString(index)
+                }
+            } finally {
+                cursor?.close()
+            }
+        }
+        if (result == null) {
+            result = uri.path
+            val cut = result?.lastIndexOf('/') ?: -1
+            if (cut != -1) {
+                result = result?.substring(cut + 1)
+            }
+        }
+        return result
+    }
+
     private fun navigateToEditor() {
         if (!isAdded) return
         parentFragmentManager.beginTransaction()
+            .setReorderingAllowed(true)
             .setCustomAnimations(
-                android.R.anim.fade_in, android.R.anim.fade_out,
-                android.R.anim.fade_in, android.R.anim.fade_out
+                R.anim.slide_in_right, R.anim.slide_out_left,
+                R.anim.slide_in_left, R.anim.slide_out_right
             )
-            .replace(R.id.container, EditorFragment())
+            .replace(R.id.container, EditorFragment(), "editor")
             .addToBackStack(null)
             .commitAllowingStateLoss()
     }
@@ -185,11 +218,12 @@ class HomeFragment : Fragment() {
     private fun navigateToReader() {
         if (!isAdded) return
         parentFragmentManager.beginTransaction()
+            .setReorderingAllowed(true)
             .setCustomAnimations(
-                android.R.anim.fade_in, android.R.anim.fade_out,
-                android.R.anim.fade_in, android.R.anim.fade_out
+                R.anim.slide_in_right, R.anim.slide_out_left,
+                R.anim.slide_in_left, R.anim.slide_out_right
             )
-            .replace(R.id.container, ReaderFragment())
+            .replace(R.id.container, ReaderFragment(), "reader")
             .addToBackStack(null)
             .commitAllowingStateLoss()
     }
